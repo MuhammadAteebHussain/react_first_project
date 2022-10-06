@@ -273,6 +273,78 @@ const FilmState = (props) => {
         }
     ]
 
+    const countryList = {
+        "header": {
+            "code": "fm9004",
+            "message": "country fetched",
+            "success": true
+        },
+        "body": [
+            {
+                "id": 1,
+                "country": "Eritrea",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 2,
+                "country": "Cameroon",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 3,
+                "country": "Maldives",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 4,
+                "country": "Luxembourg",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 5,
+                "country": "Eritrea",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 6,
+                "country": "Liberia",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 7,
+                "country": "South Georgia and the South Sandwich Islands",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 8,
+                "country": "Timor-Leste",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 9,
+                "country": "Kuwait",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            },
+            {
+                "id": 10,
+                "country": "Albania",
+                "created_at": "2022-10-06T20:25:10.000000Z",
+                "updated_at": "2022-10-06T20:25:10.000000Z"
+            }
+        ]
+    }
+
+
+
 
 
     const [filmsState, setfilmsState] = useState(films)
@@ -280,6 +352,7 @@ const FilmState = (props) => {
     const [filmDetailState, setfilmDetailState] = useState(filmsDetails)
     const [filmGenreState, setfilmGenreState] = useState(filmGenre)
     const [commentState, setcommentsState] = useState(filmComments)
+    const [countryState, setCountryState] = useState(countryList)
 
 
 
@@ -302,7 +375,7 @@ const FilmState = (props) => {
 
 
     return (
-        <AuthContext.Provider value={{ filmsState, setfilmsState, loginState, setloginState, getAllFilms, filmDetailState, getFilmBySlug, filmGenreState, commentState }} >
+        <AuthContext.Provider value={{ filmsState, setfilmsState, loginState, setloginState, getAllFilms, filmDetailState, getFilmBySlug, filmGenreState, commentState,countryState,setCountryState }} >
             {props.children}
         </AuthContext.Provider>
     )
