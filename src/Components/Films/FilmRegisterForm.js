@@ -1,18 +1,42 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/user/AuthContext';
 
 
 export default function FilmRegisterForm() {
+    const film = useContext(AuthContext)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        axios({
+            url: "http://127.0.0.1:9084/api/country/list",
+            method: "GET",
+            headers: {
+                Authorization: '',
+                "Accept": "application/json",
+            },
+
+        }).then(function (response) {
+            film.setCountryState(response.data)
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+    }, [])
 
     const [params, setParamsState] = useState({
         name: '', photo: '', description: '', release_date: '', rating: '', country: '', genre_id: ''
     })
     const [photoState, setPhotoState] = useState({ photo: '' });
+    const [countryValueState, setValueCountryState] = useState(false);
+
 
     const onChangeHandler = (e) => {
         setParamsState({ ...params, [e.target.name]: e.target.value })
-        // setPhotoState(e.target.file[0]);
-        // setParamsState({ ...params, [photo]:photoState })
 
     }
 
@@ -20,28 +44,26 @@ export default function FilmRegisterForm() {
         setPhotoState({ photo: e.target.files[0] });
     }
 
+    const onChangeCountryHandler = (e) => {
+        setValueCountryState({ country_id: e.target.value })
+    }
+
 
     const registerFilm = (e) => {
         e.preventDefault()
-        let formData = new FormData();         
-        console.log(photoState);
-        // setParamsState({ ...params, photoState})
+        let formData = new FormData();
 
         formData.append('name', params.name)
         formData.append('film_slug', params.film_slug)
         formData.append('release_date', params.release_date)
         formData.append('ticket_price', params.ticket_price)
-        formData.append('country', params.country)
+        formData.append('country_id', countryValueState.country_id)
         formData.append('genre_id', params.genre_id)
         formData.append('description', params.description)
         formData.append('photo', photoState.photo)
 
-
-        // setParamsState({photo: e.target.files[0]})
-
         const param = params;
         console.log(param);
-        // console.log(typeof photoState);
         axios({
             url: "http://127.0.0.1:9084/api/film/store",
             method: "POST",
@@ -54,7 +76,7 @@ export default function FilmRegisterForm() {
 
         }).then(function (response) {
             console.log(response.data);
-            // navigate('/films');
+            navigate('/films');
 
         }).catch(function (error) {
             console.log(error);
@@ -121,7 +143,13 @@ export default function FilmRegisterForm() {
                     </div>
                     <div className="col-md-4">
                         <div className="form-outline">
-                            <input type="text" id="form6Example4" className="form-control" name='country' onChange={onChangeHandler} />
+                            <select id="country" className="form-control" name='country' onChange={onChangeCountryHandler}>
+                                <option value=''>Please Select Country</option>
+                                {film.countryState.body.map((c) => {
+                                    return <option value={c.id}>{c.country}</option>
+                                })}
+
+                            </select>
                             <label className="form-label" htmlFor="country">Country</label>
                         </div>
                     </div>
