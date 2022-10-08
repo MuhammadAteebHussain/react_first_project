@@ -22,10 +22,11 @@ export default class App extends Component {
             <Navbar title="Film" />
 
             <Routes>
+              <Route exact path='/' element={<Film />} />
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/register' element={<Register />} />
 
-            
+
               <Route exact path='/films' element={<Film />} />
 
               <Route exact path='/films/:slug' element={<Filmdetails />} />

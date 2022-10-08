@@ -26,6 +26,22 @@ export default function FilmRegisterForm() {
         });
 
 
+        axios({
+            url: "http://127.0.0.1:9084/api/genre/list",
+            method: "GET",
+            headers: {
+                Authorization: '',
+                "Accept": "application/json",
+            },
+
+        }).then(function (response) {
+            film.setGenreListState(response.data)
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
     }, [])
 
     const [params, setParamsState] = useState({
@@ -33,6 +49,8 @@ export default function FilmRegisterForm() {
     })
     const [photoState, setPhotoState] = useState({ photo: '' });
     const [countryValueState, setValueCountryState] = useState(false);
+    const [genreValueState, setValueGenreState] = useState([]);
+    const [checked, setChecked] = useState([]);
 
 
     const onChangeHandler = (e) => {
@@ -47,6 +65,18 @@ export default function FilmRegisterForm() {
     const onChangeCountryHandler = (e) => {
         setValueCountryState({ country_id: e.target.value })
     }
+    const value = [];
+
+    const onChangeGenreHandler = (e) => {
+
+        let updatedList = [...genreValueState];
+        if (e.target.checked) {
+            updatedList = [...genreValueState, e.target.value];
+        } else {
+            updatedList.splice(checked.indexOf(e.target.value), 1);
+        }
+        setValueGenreState(updatedList);
+    }
 
 
     const registerFilm = (e) => {
@@ -58,7 +88,7 @@ export default function FilmRegisterForm() {
         formData.append('release_date', params.release_date)
         formData.append('ticket_price', params.ticket_price)
         formData.append('country_id', countryValueState.country_id)
-        formData.append('genre_id', params.genre_id)
+        formData.append('genre_ids', genreValueState)
         formData.append('description', params.description)
         formData.append('photo', photoState.photo)
 
@@ -126,12 +156,7 @@ export default function FilmRegisterForm() {
                             <label className="form-label" htmlFor="release_date">Release Date</label>
                         </div>
                     </div>
-                    <div className="col">
-                        <div className="form-outline">
-                            <input type="text" id="form6Example4" className="form-control" name='rating' onChange={onChangeHandler} />
-                            <label className="form-label" htmlFor="rating">Rating</label>
-                        </div>
-                    </div>
+                   
                 </div>
 
                 <div className="row mb-4">
@@ -155,7 +180,15 @@ export default function FilmRegisterForm() {
                     </div>
                     <div className="col-md-4">
                         <div className="form-outline">
-                            <input type="text" id="form6Example4" className="form-control" name='genre_id' onChange={onChangeHandler} />
+                            {film.genreListState.body.map((g) => {
+                          return   <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value={g.id} onChange={onChangeGenreHandler} name="genre_check" />
+                                    <label className="form-check-label" for="flexCheckDefault">
+                                        {g.genre}
+                                    </label>
+                                </div>
+                            })}
+
                             <label className="form-label" htmlFor="form6Example4">Film Genre</label>
                         </div>
                     </div>

@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react'
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthContext from '../../context/user/AuthContext';
 import axios from "axios"
 
 export default function Register() {
     const user = useContext(AuthContext)
     const navigate = useNavigate();
-
-
 
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", confirm_password: "" })
     const chnageHandler = (e) => {
@@ -20,8 +18,6 @@ export default function Register() {
 
         e.preventDefault()
         const param = credentials
-        console.log(param);
-
         axios({
             url: "http://127.0.0.1:9084/api/user/register",
             method: "post",
@@ -40,6 +36,8 @@ export default function Register() {
         }).then(function (response) {
             console.log(response.data.body.token);
             user.setloginState(localStorage.setItem('token', response.data.body.token));
+            localStorage.setItem('user_id', response.data.body.id)
+
             navigate('/films');
 
         }).catch(function (error) {
@@ -79,13 +77,11 @@ export default function Register() {
                     </div>
                     <div className="col">
                         <div className="form-outline">
-                            <input type="confirm_password" id="confirm_password" onChange={chnageHandler} className="form-control" name="confirm_password" />
+                            <input type="password" id="confirm_password" onChange={chnageHandler} className="form-control" name="confirm_password" />
                             <label className="form-label" htmlFor="confirm_password">Confirm-Password</label>
                         </div>
                     </div>
                 </div>
-
-
 
                 <div className="form-check d-flex justify-content-center mb-4">
                     <input className="form-check-input me-2" type="checkbox" value="" id="form6Example8" checked />

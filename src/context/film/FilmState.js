@@ -343,6 +343,44 @@ const FilmState = (props) => {
         ]
     }
 
+    const genreList = {
+        "header": {
+          "code": "fm9004",
+          "message": "genre fetched",
+          "success": true
+        },
+        "body": [
+          {
+            "id": 1,
+            "genre": "Action",
+            "status": 1,
+            "created_at": "2022-10-06T20:25:10.000000Z",
+            "updated_at": "2022-10-06T20:25:10.000000Z"
+          },
+          {
+            "id": 2,
+            "genre": "Romantic",
+            "status": 1,
+            "created_at": "2022-10-06T20:25:10.000000Z",
+            "updated_at": "2022-10-06T20:25:10.000000Z"
+          },
+          {
+            "id": 3,
+            "genre": "Motivation",
+            "status": 1,
+            "created_at": "2022-10-06T20:25:10.000000Z",
+            "updated_at": "2022-10-06T20:25:10.000000Z"
+          },
+          {
+            "id": 4,
+            "genre": "Arabic",
+            "status": 1,
+            "created_at": "2022-10-06T20:25:10.000000Z",
+            "updated_at": "2022-10-06T20:25:10.000000Z"
+          }
+        ]
+      }
+
 
 
 
@@ -353,6 +391,7 @@ const FilmState = (props) => {
     const [filmGenreState, setfilmGenreState] = useState(filmGenre)
     const [commentState, setcommentsState] = useState(filmComments)
     const [countryState, setCountryState] = useState(countryList)
+    const [genreListState, setGenreListState] = useState(genreList)
 
 
 
@@ -375,7 +414,7 @@ const FilmState = (props) => {
 
 
     return (
-        <AuthContext.Provider value={{ filmsState, setfilmsState, loginState, setloginState, getAllFilms, filmDetailState, getFilmBySlug, filmGenreState, commentState,countryState,setCountryState }} >
+        <AuthContext.Provider value={{ filmsState, setfilmsState, loginState, setloginState, getAllFilms, filmDetailState, getFilmBySlug, filmGenreState, commentState,countryState,setCountryState,genreListState,setGenreListState }} >
             {props.children}
         </AuthContext.Provider>
     )

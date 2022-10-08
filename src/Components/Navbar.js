@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AuthContext from '../context/user/AuthContext'
+
 
 export default function Navbar(props) {
+    const user = useContext(AuthContext)
+    // const [loginState, setLoginState] = useState(false);
+    const LogoutHandler = () => {
+        user.setloginState(false);
+        localStorage.setItem('user_id','')
+        localStorage.setItem('token','');
+    }
+    useEffect(() => {
+        if(localStorage.getItem('user_id')) 
+            user.setloginState(true);
+    }, [])
+    
+
     return (
         <nav className={`navbar navbar-expand-lg navbar-light bg-light`}>
             <div className="container-fluid">
@@ -13,21 +28,28 @@ export default function Navbar(props) {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link active" to='films/create'>Register New Film</Link>
-                            {/* <Link className="nav-link active" aria-current="page" to={`/`}>Home</Link> */}
                         </li>
                     </ul>
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    {!user.loginState ?
+                        <>
+                            <li className="nav-item">
+                                <Link className="nav-link active" to='login'>Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to='register'>Register</Link>
+                            </li>
+                        </> :
                         <li className="nav-item">
-                            <Link className="nav-link active" to='login'>Login</Link>
-                            {/* <Link className="nav-link active" aria-current="page" to={`/`}>Home</Link> */}
+                            <Link className="nav-link active" to='logout' onClick={LogoutHandler}>Logout</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link active" to='register'>Register</Link>
-                        </li>
-                
-                    </ul>
+                    }
+
+
+
+                </ul>
             </div>
-        </nav>
+        </nav >
     )
 }

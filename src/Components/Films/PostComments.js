@@ -54,11 +54,13 @@ export default function PostComments(props) {
                 <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.webp" className="border rounded-circle me-2"
                     alt="Avatar" style={{ height: "40px" }} />
             </a>
+            {film.loginState ?  
             <div className="form-outline w-100">
                 <textarea className="form-control" id="comment" rows="2" name='comment' onChange={onChangeHandler} value={commentState.comment}></textarea>
                 <label className="form-label" htmlFor="comments">Write a comment</label>
                 <button className='btn btn-sm btn-primary' onClick={storeComment}>Post</button>
             </div>
+            : ''}
         </div>
     )
 }

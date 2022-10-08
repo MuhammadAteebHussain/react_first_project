@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios"
 import AuthContext from '../../context/user/AuthContext'
 import {  useNavigate } from "react-router-dom";
@@ -9,6 +9,13 @@ import {  useNavigate } from "react-router-dom";
 export default function Login() {
     const user = useContext(AuthContext)
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(localStorage.getItem('user_id')) 
+         navigate('/');
+    }, [])
+    
+
 
 
 
@@ -41,6 +48,7 @@ export default function Login() {
             console.log(response.data.body.token);
             localStorage.setItem('user_id',response.data.body.id)
             localStorage.setItem('token',response.data.body.token);
+            user.setloginState(true);
             // user.setloginState(localStorage.setItem('token',response.data.body.token));
             navigate('/films');
 
